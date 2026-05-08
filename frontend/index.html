@@ -3,19 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense-tracker</title>
+    <title>Expense Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <h1> Hii Kishore.... </h1>
 
-    <div id = "totalExpense">
+    <h1>Hii Kishore....</h1>
+
+    <div id="totalExpense">
         <h3>Total Expense</h3>
     </div>
 
-    <div id = "expenseContainer"> </div>
-    <script src="script.js"></script>
+    <div style="max-width:680px; margin: 0 auto 24px; display:flex; justify-content:flex-end;">
+        <button id="openModal">+ Add Expense</button>
+    </div>
 
+    <div id="expenseContainer"></div>
+
+    <!-- Modal overlay -->
+    <div id="modalOverlay">
+        <div id="modal">
+            <h2>Add Expense</h2>
+            <form id="expenseForm">
+                <div>
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="e.g. 500" required />
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <input type="text" id="description" placeholder="e.g. Groceries" required />
+                </div>
+                <div>
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required />
+                </div>
+                <button type="submit">Add Expense</button>
+                <p id="msg"></p>
+            </form>
+            <button id="closeModal">✕</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

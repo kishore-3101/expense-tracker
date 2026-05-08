@@ -1,66 +1,104 @@
-const grouped ={};
+const container   = document.getElementById("expenseContainer");
+const totaldiv    = document.getElementById("totalExpense");
+const openBtn     = document.getElementById("openModal");
+const closeBtn    = document.getElementById("closeModal");
+const overlay     = document.getElementById("modalOverlay");
+const form        = document.getElementById("expenseForm");
+const msg         = document.getElementById("msg");
 
-const container = document.getElementById("expenseContainer");
-const totaldiv = document.getElementById("totalExpense");
+// ── Modal open / close ──
+openBtn.addEventListener("click", () => {
+    document.getElementById("date").valueAsDate = new Date();
+    overlay.classList.add("show");
+});
 
+closeBtn.addEventListener("click", closeModal);
+
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+
+function closeModal() {
+    overlay.classList.remove("show");
+    form.reset();
+    msg.textContent = "";
+    msg.className = "";
+}
+
+// ── Add expense ──
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    msg.textContent = "Saving...";
+    msg.className = "";
+
+    const body = {
+        amount:      document.getElementById("amount").value,
+        description: document.getElementById("description").value,
+        date:        document.getElementById("date").value
+    };
+
+    try {
+        const res  = await fetch("https://expense-tracker-vgy9.onrender.com/api/expense-tracker/createExpense", {
+            method:  "POST",
+            headers: { "Content-Type": "application/json" },
+            body:    JSON.stringify(body)
+        });
+        const data = await res.json();
+        console.log("Created:", data);
+        msg.textContent = "Expense added!";
+        msg.className = "success";
+
+        // refresh list after short delay
+        setTimeout(() => {
+            closeModal();
+            container.innerHTML = "";
+            totaldiv.innerHTML = `<span class="total-label">Total Spent</span>`;
+            getExpenses();
+        }, 800);
+
+    } catch (err) {
+        console.error(err);
+        msg.textContent = "Failed. Try again.";
+        msg.className = "error";
+    }
+});
+
+// ── Fetch & render expenses ──
 async function getExpenses() {
+    const grouped = {};
 
-    //getting response from the server
     const response = await fetch("https://expense-tracker-vgy9.onrender.com/api/expense-tracker/expense");
-
     const expenses = await response.json();
 
     console.log(expenses);
 
-    expenses.forEach(expense =>{
+    expenses.forEach(expense => {
+        const { date, amount, description, id } = expense;
 
-        const date = expense.date;
-        const amount = expense.amount;
-        const desc = expense.description;
-        const id = expense.id;
+        if (!grouped[date]) grouped[date] = [];
 
-        if(grouped[date]){
-            grouped[date].push({
-                id : id,
-                amount : amount,
-                description : desc
-            })
-        } else {
-            grouped[date] = [];
-            grouped[date].push({
-                amount : amount,
-                description : desc
-            })
-        }
-
+        grouped[date].push({ id, amount, description }); // ✅ id always included
     });
 
-    const sortedDates = Object.keys(grouped).sort((a, b) => {
-        return new Date(b) - new Date(a);
-    });
+    const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
 
-    var totalexpense = 0;
+    let totalExpense = 0;
 
     sortedDates.forEach(date => {
-
-        var dateSum = 0;
+        let dateSum = 0;
 
         const dateDiv = document.createElement("div");
         dateDiv.classList.add("dateDiv");
 
         const exp = document.createElement("ul");
 
-        for(const obj of grouped[date]){
-
-            dateSum+=Number(obj.amount);
+        for (const obj of grouped[date]) {
+            dateSum += Number(obj.amount);
 
             const li = document.createElement("li");
             li.innerHTML = `<span>${obj.description}</span><span class="li-amount">− ₹${parseFloat(obj.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
             exp.appendChild(li);
-
         }
 
-        totalexpense+=dateSum;
+        totalExpense += dateSum;
 
         const header = document.createElement("div");
         header.classList.add("date-header");
@@ -77,13 +115,9 @@ async function getExpenses() {
         dateDiv.appendChild(header);
         dateDiv.appendChild(exp);
         container.appendChild(dateDiv);
-
     });
 
-    totaldiv.innerHTML = `<span class="total-label">Total Spent</span><span class="total-amount">₹${totalexpense.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
-
-    console.log(totalexpense);
-    
+    totaldiv.innerHTML = `<span class="total-label">Total Spent</span><span class="total-amount">₹${totalExpense.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
 }
 
 getExpenses();
