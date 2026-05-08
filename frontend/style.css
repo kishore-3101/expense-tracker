@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg: #07060f;
+    --card: #0e0c1a;
+    --card-hover: #131025;
+    --border: rgba(139, 92, 246, 0.12);
+    --border-strong: rgba(139, 92, 246, 0.30);
+    --purple: #8b5cf6;
+    --purple-bright: #a78bfa;
+    --purple-dim: rgba(139, 92, 246, 0.07);
+    --purple-glow: rgba(139, 92, 246, 0.14);
+    --cyan: #67e8f9;
+    --danger: #f87171;
+    --text: #ede9fe;
+    --text-dim: #6d6a80;
+}
+
+body {
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse 70% 50% at 50% -5%, rgba(109, 40, 217, 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 90% 80%, rgba(103, 232, 249, 0.05) 0%, transparent 60%);
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 44px 16px 72px;
+}
+
+/* ── Heading ── */
+h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 5.5vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    max-width: 680px;
+    margin: 0 auto 8px;
+    text-align: center;
+    background: linear-gradient(120deg, var(--text) 40%, var(--purple-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--purple);
+    margin: 14px auto 36px;
+    -webkit-text-fill-color: unset;
+}
+
+/* ── Total expense ── */
+#totalExpense {
+    max-width: 680px;
+    margin: 0 auto 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    background: var(--purple-dim);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+#totalExpense::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.total-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--purple-bright);
+}
+
+.total-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--danger);
+}
+
+/* ── Container ── */
+#expenseContainer {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Date card ── */
+.dateDiv {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dateDiv:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 24px rgba(139, 92, 246, 0.08);
+}
+
+/* ── Date header ── */
+.date-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 20px;
+    background: var(--purple-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.dateDiv h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--purple-bright);
+    margin: 0;
+}
+
+.date-total {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--danger);
+    letter-spacing: -0.01em;
+}
+
+/* ── List ── */
+.dateDiv ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.dateDiv ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+    font-weight: 300;
+    padding: 12px 20px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.07);
+    transition: background 0.15s;
+}
+
+.dateDiv ul li:last-child { border-bottom: none; }
+
+.dateDiv ul li:hover { background: var(--purple-glow); }
+
+.li-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--danger);
+    letter-spacing: -0.01em;
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    body { padding: 28px 12px 56px; }
+    .date-header { padding: 11px 16px; }
+    .dateDiv ul li { padding: 11px 16px; font-size: 13px; }
+    .total-amount { font-size: 22px; }
+}
