@@ -6,7 +6,7 @@ const totaldiv = document.getElementById("totalExpense");
 async function getExpenses() {
 
     //getting response from the server
-    const response = await fetch("http://localhost:3000/api/expense-tracker/expense");
+    const response = await fetch("https://expense-tracker-vgy9.onrender.com/api/expense-tracker/expense");
 
     const expenses = await response.json();
 
