@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://expense-tracker-eosin-eta.vercel.app/")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/expense-tracker")
 public class expenseController {
