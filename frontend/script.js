@@ -52,7 +52,7 @@ form.addEventListener("submit", async function(e) {
             container.innerHTML = "";
             totaldiv.innerHTML = `<span class="total-label">Total Spent</span>`;
             getExpenses();
-        }, 800);
+        }, 500);
 
     } catch (err) {
         console.error(err);
@@ -75,7 +75,7 @@ async function getExpenses() {
 
         if (!grouped[date]) grouped[date] = [];
 
-        grouped[date].push({ id, amount, description }); // ✅ id always included
+        grouped[date].push({ id, amount, description, date });
     });
 
     const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
@@ -93,7 +93,18 @@ async function getExpenses() {
         for (const obj of grouped[date]) {
             dateSum += Number(obj.amount);
 
-            const li = document.createElement("li");
+            var li = document.createElement("li");
+
+            li.dataset.id = obj.id;
+            li.dataset.amount = obj.amount;
+            li.dataset.description = obj.description;
+            li.dataset.date = obj.date
+
+            li.addEventListener("click", function() {
+                const {id, amount, description, date} = this.dataset;
+                openDetailModal(id, amount, description, date);
+            });
+
             li.innerHTML = `<span>${obj.description}</span><span class="li-amount">− ₹${parseFloat(obj.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
             exp.appendChild(li);
         }
@@ -119,5 +130,18 @@ async function getExpenses() {
 
     totaldiv.innerHTML = `<span class="total-label">Total Spent</span><span class="total-amount">₹${totalExpense.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
 }
+
+function openDetailModal(id, amount, description, date){
+    document.getElementById("detail-id").textContent = id;
+    document.getElementById("detail-amount").value = amount;
+    document.getElementById("detail-description").value = description;
+    document.getElementById("detail-date").value = date;
+    console.log("date : ", date);
+    document.getElementById("detailOverlay").classList.add("show")
+}
+
+document.getElementById("closeDetailModal").addEventListener("click", () => {
+    document.getElementById("detailOverlay").classList.remove("show");
+});
 
 getExpenses();

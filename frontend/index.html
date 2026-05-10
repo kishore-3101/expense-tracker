@@ -21,8 +21,8 @@
     <div id="expenseContainer"></div>
 
     <!-- Modal overlay -->
-    <div id="modalOverlay">
-        <div id="modal">
+    <div id="modalOverlay" class="overlay">
+        <div id="modal" class ="modal-box">
             <h2>Add Expense</h2>
             <form id="expenseForm">
                 <div>
@@ -43,6 +43,28 @@
             <button id="closeModal">✕</button>
         </div>
     </div>
+
+    <!-- Modal Expense Detail overlay -->
+    <div id="detailOverlay" class="overlay">
+        <div id="detailModal" class="modal-box">
+            <h2>Expense Details</h2>
+            <p id="detail-id"></p>
+            <div>
+                <label>Amount</label>
+                <input type="number" id="detail-amount">
+            </div>
+            <div>
+                <label>Description</label>
+                <input type="text" id="detail-description">
+            </div>
+            <div>
+                <label>Date</label>
+                <input type="date" id="detail-date">
+            </div>
+            <button id="closeDetailModal" type="button" class="close-btn">✕</button>
+        </div>
+    </div>
+
 
     <script src="script.js"></script>
 </body>
