@@ -1,108 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --bg: #07060f;
-    --card: #0e0c1a;
-    --card-hover: #131025;
-    --border: rgba(139, 92, 246, 0.12);
-    --border-strong: rgba(139, 92, 246, 0.30);
-    --purple: #8b5cf6;
-    --purple-bright: #a78bfa;
-    --purple-dim: rgba(139, 92, 246, 0.07);
-    --purple-glow: rgba(139, 92, 246, 0.14);
-    --cyan: #67e8f9;
-    --danger: #f87171;
-    --text: #ede9fe;
-    --text-dim: #6d6a80;
+    --bg: #0d0b1a;
+    --card: #13102a;
+    --card2: #19163a;
+    --border: #2a2550;
+    --border-strong: #3a3470;
+    --text: #e8e4ff;
+    --text-dim: #4a4480;
+    --text-mid: #8882cc;
+    --accent: #9b8fff;
+    --danger: #ff0000;
 }
 
 body {
     background: var(--bg);
-    background-image:
-        radial-gradient(ellipse 70% 50% at 50% -5%, rgba(109, 40, 217, 0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 30% at 90% 80%, rgba(103, 232, 249, 0.05) 0%, transparent 60%);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     color: var(--text);
     min-height: 100vh;
-    padding: 44px 16px 72px;
 }
 
-/* ── Heading ── */
+/* ── Header ── */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 16px;
+}
+
+.header-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left { display: flex; align-items: center; gap: 14px; }
+
+.logo {
+    width: 40px;
+    height: 40px;
+    background: var(--text);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--bg);
+    flex-shrink: 0;
+}
+
+.header-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+}
+
 h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(22px, 5.5vw, 36px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
+/* ── Add button ── */
+#openModal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--text);
+    border: none;
+    border-radius: 8px;
+    color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+}
+
+#openModal:hover { opacity: 0.88; }
+#openModal:active { transform: scale(0.97); }
+.btn-icon { font-size: 18px; font-weight: 300; line-height: 1; }
+
+/* ── Main ── */
+main {
     max-width: 680px;
-    margin: 0 auto 8px;
-    text-align: center;
-    background: linear-gradient(120deg, var(--text) 40%, var(--purple-bright));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin: 0 auto;
+    padding: 32px 16px 72px;
 }
 
-h1::after {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--purple);
-    margin: 14px auto 36px;
-    -webkit-text-fill-color: unset;
-}
-
-/* ── Total expense ── */
+/* ── Total card ── */
 #totalExpense {
-    max-width: 680px;
-    margin: 0 auto 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 24px;
-    background: var(--purple-dim);
+    padding: 24px 28px;
+    background: var(--card);
     border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    position: relative;
-    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 28px;
 }
 
-#totalExpense::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%);
-    pointer-events: none;
-}
+.total-left { display: flex; flex-direction: column; gap: 6px; }
 
 .total-label {
-    font-family: 'Space Grotesk', sans-serif;
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--purple-bright);
+    color: var(--text-dim);
 }
 
 .total-amount {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 600;
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: var(--text);
     letter-spacing: -0.02em;
-    color: var(--danger);
+    line-height: 1;
+}
+
+.total-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text-mid);
 }
 
 /* ── Container ── */
 #expenseContainer {
-    max-width: 680px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 /* ── Date card ── */
@@ -111,320 +157,304 @@ h1::after {
     border: 1px solid var(--border);
     border-radius: 14px;
     overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
 }
 
-.dateDiv:hover {
-    border-color: var(--border-strong);
-    box-shadow: 0 0 24px rgba(139, 92, 246, 0.08);
-}
+.dateDiv:hover { border-color: var(--border-strong); }
 
-/* ── Date header ── */
 .date-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 13px 20px;
-    background: var(--purple-dim);
+    padding: 12px 20px;
+    background: var(--card2);
     border-bottom: 1px solid var(--border);
 }
 
 .dateDiv h3 {
-    font-family: 'Space Grotesk', sans-serif;
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--purple-bright);
+    color: var(--text-dim);
     margin: 0;
 }
 
 .date-total {
-    font-family: 'Syne', sans-serif;
+    font-family: 'DM Serif Display', serif;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 400;
     color: var(--danger);
-    letter-spacing: -0.01em;
 }
 
-/* ── List ── */
-.dateDiv ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-}
+.dateDiv ul { list-style: none; display: flex; flex-direction: column; }
 
 .dateDiv ul li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 300;
-    padding: 12px 20px;
-    color: var(--text);
-    border-bottom: 1px solid rgba(139, 92, 246, 0.07);
-    transition: background 0.15s;
+    padding: 13px 20px;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
 }
 
 .dateDiv ul li:last-child { border-bottom: none; }
 
-.dateDiv ul li:hover { background: var(--purple-glow); }
+.dateDiv ul li:hover {
+    background: var(--card2);
+    color: var(--text);
+}
 
 .li-amount {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    font-weight: 400;
     color: var(--danger);
-    letter-spacing: -0.01em;
     flex-shrink: 0;
     margin-left: 16px;
 }
 
-/* ── Mobile ── */
-@media (max-width: 480px) {
-    body { padding: 28px 12px 56px; }
-    .date-header { padding: 11px 16px; }
-    .dateDiv ul li { padding: 11px 16px; font-size: 13px; }
-    .total-amount { font-size: 22px; }
-}
-
-/* ── Add Expense button ── */
-#openModal {
-    background: var(--purple-dim);
-    border: 1px solid var(--border-strong);
-    border-radius: 8px;
-    color: var(--purple-bright);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 10px 18px;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-}
-
-#openModal:hover {
-    background: var(--purple-glow);
-    box-shadow: 0 0 16px rgba(139, 92, 246, 0.12);
-}
-
-/* ── Modal overlay ── */
-#modalOverlay {
+/* ── Overlay ── */
+.overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(7, 6, 15, 0.85);
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 100;
     align-items: center;
     justify-content: center;
+    padding: 16px;
 }
 
-#modalOverlay.show { display: flex; }
+.overlay.show { display: flex; }
 
 /* ── Modal box ── */
-#modal {
+.modal-box {
     background: var(--card);
     border: 1px solid var(--border-strong);
-    border-radius: 14px;
-    padding: 32px 28px;
+    border-radius: 18px;
+    padding: 28px;
     width: 100%;
-    max-width: 440px;
-    position: relative;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    box-shadow: 0 0 48px rgba(139, 92, 246, 0.12);
+    gap: 20px;
+    animation: slideUp 0.18s ease;
 }
 
-#modal h2 {
-    font-family: 'Syne', sans-serif;
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-title-group { display: flex; align-items: center; gap: 12px; }
+
+.modal-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--card2);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--text-mid);
+}
+
+.modal-box h2 {
+    font-family: 'DM Serif Display', serif;
     font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 400;
     color: var(--text);
+    letter-spacing: -0.01em;
 }
 
 /* ── Close button ── */
-#closeModal {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: transparent;
-    border: none;
-    color: var(--text-dim);
-    font-size: 16px;
-    cursor: pointer;
-    transition: color 0.15s;
-}
-
-#closeModal:hover { color: var(--text); }
-
-/* ── Form inside modal ── */
-#expenseForm {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-#expenseForm label {
-    display: block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--purple-bright);
-    margin-bottom: 6px;
-}
-
-#expenseForm input {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    padding: 11px 14px;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-}
-
-#expenseForm input::placeholder { color: var(--text-dim); }
-
-#expenseForm input:focus {
-    border-color: var(--border-strong);
-    background: var(--purple-dim);
-}
-
-#expenseForm input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(60%) sepia(60%) saturate(400%) hue-rotate(230deg);
-    cursor: pointer;
-}
-
-#expenseForm button[type="submit"] {
-    width: 100%;
-    padding: 13px;
-    background: var(--purple-dim);
+.close-btn {
+    width: 30px;
+    height: 30px;
+    background: var(--card2);
     border: 1px solid var(--border-strong);
     border-radius: 8px;
-    color: var(--purple-bright);
-    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text-mid);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+
+.close-btn:hover {
+    background: var(--border-strong);
+    color: var(--text);
+}
+
+/* ── Form ── */
+#expenseForm { display: flex; flex-direction: column; gap: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+
+.modal-box label {
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.modal-box input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.modal-box input::placeholder { color: var(--text-dim); }
+
+.modal-box input:focus { border-color: #555; }
+
+.modal-box input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.4);
+    cursor: pointer;
+}
+
+/* ── Submit button ── */
+.submit-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--text);
+    border: none;
+    border-radius: 8px;
+    color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     cursor: pointer;
     margin-top: 4px;
-    transition: background 0.2s, box-shadow 0.2s;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-#expenseForm button[type="submit"]:hover {
-    background: var(--purple-glow);
-    box-shadow: 0 0 16px rgba(139, 92, 246, 0.12);
-}
+.submit-btn:hover { opacity: 0.88; }
+.submit-btn:active { transform: scale(0.98); }
 
+/* ── Status msg ── */
 #msg {
     font-size: 12px;
-    letter-spacing: 0.05em;
     text-align: center;
     min-height: 18px;
     color: var(--text-dim);
 }
 
-#msg.success { color: var(--purple-bright); }
+#msg.success { color: var(--text-mid); }
 #msg.error   { color: var(--danger); }
+
+/* ── Detail id ── */
+#detail-id {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-top: -8px;
+}
 
 /* ── Mobile ── */
 @media (max-width: 480px) {
-    #modal { padding: 24px 18px; margin: 0 12px; }
+    header { padding: 14px 12px; }
+    main { padding: 24px 12px 56px; }
+    .total-amount { font-size: 32px; }
+    .modal-box { padding: 22px 18px; }
+    #openModal span:last-child { display: none; }
+}
+#detail-id { display: none; }
+
+#editExpense {
+    flex: 1;
+    padding: 13px;
+    background: #22c55e;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-/* ── Detail Modal ── */
-#detailOverlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(7, 6, 15, 0.85);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
+#editExpense:hover { opacity: 0.88; }
+#editExpense:active { transform: scale(0.98); }
+
+#deleteExpense {
+    flex: 1;
+    padding: 13px;
+    background: #ef4444;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-#detailOverlay.show { display: flex; }
+#deleteExpense:hover { opacity: 0.88; }
+#deleteExpense:active { transform: scale(0.98); }
 
-#detailModal {
-    background: var(--card);
+#cancelDelete {
+    flex: 1;
+    padding: 13px;
+    background: transparent;
     border: 1px solid var(--border-strong);
-    border-radius: 14px;
-    padding: 32px 28px;
-    width: 100%;
-    max-width: 440px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    box-shadow: 0 0 48px rgba(139, 92, 246, 0.12);
-}
-
-#detailModal h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--text);
-}
-
-#detail-id {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-}
-
-#detailModal label {
-    display: block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--purple-bright);
-    margin-bottom: 6px;
-}
-
-#detailModal input {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    padding: 11px 14px;
-    outline: none;
-    opacity: 0.7;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
 }
 
-#closeDetailModal {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: transparent;
+#cancelDelete:hover { background: var(--card2); }
+#cancelDelete:active { transform: scale(0.98); }
+
+#confirmDelete {
+    flex: 1;
+    padding: 13px;
+    background: #ef4444;
     border: none;
-    color: var(--text-dim);
-    font-size: 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
-    transition: color 0.15s;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-#closeDetailModal:hover { color: var(--text); }
-
-@media (max-width: 480px) {
-    #detailModal { padding: 24px 18px; margin: 0 12px; }
-}
-
-#detailModal input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(60%) sepia(60%) saturate(400%) hue-rotate(230deg);
-    cursor: pointer;
-}
+#confirmDelete:hover { opacity: 0.88; }
+#confirmDelete:active { transform: scale(0.98); }

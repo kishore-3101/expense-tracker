@@ -144,4 +144,83 @@ document.getElementById("closeDetailModal").addEventListener("click", () => {
     document.getElementById("detailOverlay").classList.remove("show");
 });
 
+const editExpenseBtn = document.getElementById("editExpense");
+
+editExpenseBtn.addEventListener("click", async function() {
+
+    const id = document.getElementById("detail-id").textContent;
+    const amount = document.getElementById("detail-amount").value;
+    const description = document.getElementById("detail-description").value;
+    const date = document.getElementById("detail-date").value;
+
+    if (!amount || !description || !date) {
+        alert("All fields are required.");
+        return;
+    }
+
+    const body = { amount, description, date };
+
+    try {
+        const res = await fetch(`https://expense-tracker-vgy9.onrender.com/api/expense-tracker/updateExpense/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        console.log("Updated:", data);
+
+        // close modal first
+        document.getElementById("detailOverlay").classList.remove("show");
+
+        // clear container before re-fetching
+        container.innerHTML = "";
+        totaldiv.innerHTML = `<span class="total-label">Total Spent</span>`;
+
+        // wait for getExpenses to finish
+        await getExpenses();
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to update. Try again.");
+    }
+
+});
+
+document.getElementById("deleteExpense").addEventListener("click", function() {
+    document.getElementById("confirmOverlay").classList.add("show");
+});
+
+document.getElementById("cancelDelete").addEventListener("click", function() {
+    document.getElementById("confirmOverlay").classList.remove("show");
+});
+
+const confirmDelete = document.getElementById("confirmDelete");
+
+confirmDelete.addEventListener("click", async function() {
+   
+    const id = document.getElementById("detail-id").textContent;
+
+    try {
+        const res = await fetch(`https://expense-tracker-vgy9.onrender.com/api/expense-tracker/delete/${id}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        // close all modals
+        document.getElementById("confirmOverlay").classList.remove("show");
+        document.getElementById("detailOverlay").classList.remove("show");
+
+        // refresh list
+        container.innerHTML = "";
+        totaldiv.innerHTML = `<span class="total-label">Total Spent</span>`;
+        await getExpenses();
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to delete. Try again.");
+    }
+});
+    
+
 getExpenses();
