@@ -3,21 +3,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    --bg: #0e0e0f;
-    --card: #13102a;
-    --card2: #19163a;
-    --border: #2a2550;
-    --border-strong: #3a3470;
-    --text: #e8e4ff;
-    --text-dim: #4a4480;
-    --text-mid: #8882cc;
-    --accent: #9b8fff;
-    --danger: #ff0000;
-=======
->>>>>>> save-work
     --bg:           #07080f;
     --card:         #0e1020;
     --card2:        #131528;
@@ -29,10 +14,6 @@
     --text-mid:     #8b90c0;
     --text-dim:     #3d4070;
     --danger:       #ff6b9d;
-<<<<<<< HEAD
-=======
->>>>>>> f9872a8 (Update month wise pagination and UI)
->>>>>>> save-work
 }
 
 body {
@@ -504,13 +485,6 @@ main {
 }
 #confirmDelete:hover { opacity: 0.85; }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-#confirmDelete:hover { opacity: 0.88; }
-#confirmDelete:active { transform: scale(0.98); }
-=======
->>>>>>> save-work
 /* ── Mobile ── */
 @media (max-width: 520px) {
     header { padding: 14px 14px; }
@@ -519,9 +493,4 @@ main {
     .total-amount { font-size: 40px; }
     .modal-box { padding: 24px 18px; }
     #openModal span:last-child { display: none; }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f9872a8 (Update month wise pagination and UI)
->>>>>>> save-work
