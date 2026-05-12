@@ -5,6 +5,8 @@ const closeBtn    = document.getElementById("closeModal");
 const overlay     = document.getElementById("modalOverlay");
 const form        = document.getElementById("expenseForm");
 const msg         = document.getElementById("msg");
+let allExpenses = [];
+let currentMonth = "";
 
 // ── Modal open / close ──
 openBtn.addEventListener("click", () => {
@@ -66,11 +68,30 @@ async function getExpenses() {
     const grouped = {};
 
     const response = await fetch("https://expense-tracker-vgy9.onrender.com/api/expense-tracker/expense");
-    const expenses = await response.json();
+    allExpenses = await response.json();
 
-    console.log(expenses);
+    currentMonth = allExpenses
+        .map(e => e.date.slice(0, 7))
+        .sort()
+        .at(-1);
 
-    expenses.forEach(expense => {
+    renderExpenses();
+
+    //console.log(expenses);
+
+    
+}
+
+function renderExpenses() {
+    container.innerHTML = "";
+    totaldiv.innerHTML = `<span class="total-label">Total Spent</span>`;
+    updateMonthLabel();
+
+    const grouped = {};
+
+    const filtered = allExpenses.filter(e => e.date.startsWith(currentMonth));
+
+    filtered.forEach(expense => {
         const { date, amount, description, id } = expense;
 
         if (!grouped[date]) grouped[date] = [];
@@ -129,7 +150,25 @@ async function getExpenses() {
     });
 
     totaldiv.innerHTML = `<span class="total-label">Total Spent</span><span class="total-amount">₹${totalExpense.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
+    
 }
+
+function updateMonthLabel() {
+    const [year, month] = currentMonth.split('-').map(Number);
+    const label = new Date(year, month - 1)
+        .toLocaleString('default', { month: 'long', year: 'numeric' });
+    document.getElementById("monthLabel").textContent = label;
+}
+
+function changeMonth(dir) {
+    const [year, month] = currentMonth.split('-').map(Number);
+    const d = new Date(year, month - 1 + dir);
+    currentMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    renderExpenses();
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => changeMonth(-1));
+document.getElementById("nextMonth").addEventListener("click", () => changeMonth(+1));
 
 function openDetailModal(id, amount, description, date){
     document.getElementById("detail-id").textContent = id;
@@ -170,7 +209,7 @@ editExpenseBtn.addEventListener("click", async function() {
         const data = await res.json();
         console.log("Updated:", data);
 
-        // close modal first
+        // close modal
         document.getElementById("detailOverlay").classList.remove("show");
 
         // clear container before re-fetching
