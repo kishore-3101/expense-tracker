@@ -9,25 +9,27 @@
 <body>
 
     <header>
-        <div class="header-left">
-            <span class="logo">₹</span>
-            <div>
-                <p class="header-sub">Welcome back</p>
-                <h1 id="userName">User</h1>
+        <div class="header-inner">
+            <div class="header-left">
+                <span class="logo">₹</span>
+                <div>
+                    <p class="header-sub">Welcome back</p>
+                    <h1 id="userName">Your Expenses</h1>
+                </div>
             </div>
-        </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-            <button id="openModal">
-                <span class="btn-icon">+</span>
-                <span>Add Expense</span>
-            </button>
-            <button id="logoutBtn">Logout</button>
+            <div class="header-actions">
+                <button id="openModal">
+                    <span class="btn-icon">+</span>
+                    <span>Add Expense</span>
+                </button>
+                <button id="logoutBtn">Logout</button>
+            </div>
         </div>
     </header>
 
     <main>
         <div id="totalExpense">
-            <div class="total-left">
+            <div>
                 <span class="total-label">Total Spent</span>
                 <span class="total-amount">₹0.00</span>
             </div>
@@ -107,7 +109,7 @@
     <!-- Confirm Delete Popup -->
     <div id="confirmOverlay" class="overlay">
         <div class="modal-box" style="max-width: 360px; text-align: center;">
-            <h2 style="font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 8px;">Delete Expense?</h2>
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 8px;">Delete Expense?</h2>
             <p style="color: var(--text-mid); font-size: 14px; margin-bottom: 24px;">This action cannot be undone.</p>
             <div style="display: flex; gap: 10px;">
                 <button id="cancelDelete">Cancel</button>

@@ -1,6 +1,5 @@
 const BASE = "https://expense-tracker-vgy9.onrender.com";
 
-// redirect to dashboard if already logged in
 if (localStorage.getItem("token")) {
     window.location.href = "index.html";
 }
@@ -8,19 +7,25 @@ if (localStorage.getItem("token")) {
 function switchTab(tab) {
     const isLogin = tab === "login";
 
-    document.getElementById("loginForm").style.display    = isLogin ? "block" : "none";
-    document.getElementById("registerForm").style.display = isLogin ? "none"  : "block";
+    document.getElementById("loginForm").style.display    = isLogin ? "flex" : "none";
+    document.getElementById("registerForm").style.display = isLogin ? "none" : "flex";
 
     document.getElementById("loginTab").classList.toggle("active", isLogin);
     document.getElementById("registerTab").classList.toggle("active", !isLogin);
+
+    document.getElementById("authTitle").textContent = isLogin ? "Sign In" : "Create Account";
+
+    document.getElementById("authSwitch").innerHTML = isLogin
+        ? `Don't have an account? <a onclick="switchTab('register')">Register</a>`
+        : `Already have an account? <a onclick="switchTab('login')">Sign In</a>`;
 }
 
-// Login
+// ── Login ──
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const msg = document.getElementById("loginMsg");
-    msg.textContent = "Logging in...";
-    msg.className = "msg";
+    msg.textContent = "Signing in...";
+    msg.className = "auth-msg";
 
     try {
         const res = await fetch(`${BASE}/api/auth/login`, {
@@ -36,26 +41,35 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
         if (!res.ok) {
             msg.textContent = "Invalid email or password.";
-            msg.className = "msg error";
+            msg.className = "auth-msg error";
             return;
         }
 
-        // save token and go to dashboard
         localStorage.setItem("token", data.token);
         window.location.href = "index.html";
 
     } catch (err) {
         msg.textContent = "Server error. Try again.";
-        msg.className = "msg error";
+        msg.className = "auth-msg error";
     }
 });
 
-// Register
+// ── Register ──
 document.getElementById("registerForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const msg = document.getElementById("registerMsg");
+
+    const password  = document.getElementById("registerPassword").value;
+    const password2 = document.getElementById("registerPassword2").value;
+
+    if (password !== password2) {
+        msg.textContent = "Passwords do not match.";
+        msg.className = "auth-msg error";
+        return;
+    }
+
     msg.textContent = "Creating account...";
-    msg.className = "msg";
+    msg.className = "auth-msg";
 
     try {
         const res = await fetch(`${BASE}/api/auth/register`, {
@@ -64,7 +78,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             body: JSON.stringify({
                 name:     document.getElementById("registerName").value,
                 email:    document.getElementById("registerEmail").value,
-                password: document.getElementById("registerPassword").value
+                password: password
             })
         });
 
@@ -72,18 +86,16 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
         if (!res.ok) {
             msg.textContent = text || "Registration failed.";
-            msg.className = "msg error";
+            msg.className = "auth-msg error";
             return;
         }
 
-        msg.textContent = "Account created! Please login.";
-        msg.className = "msg success";
-
-        // switch to login tab after 1s
-        setTimeout(() => switchTab("login"), 1000);
+        msg.textContent = "Account created! Please sign in.";
+        msg.className = "auth-msg success";
+        setTimeout(() => switchTab("login"), 1200);
 
     } catch (err) {
         msg.textContent = "Server error. Try again.";
-        msg.className = "msg error";
+        msg.className = "auth-msg error";
     }
 });
